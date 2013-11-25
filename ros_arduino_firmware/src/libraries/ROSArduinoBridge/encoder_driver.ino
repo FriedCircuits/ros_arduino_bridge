@@ -27,6 +27,24 @@
     if (i == LEFT) return encoders.YAxisReset();
     else return encoders.XAxisReset();
   }
+#elif defined DAGU4MOTOR
+ /* Dagu4Motor Controller\Encoders */
+  #include <Encoder.h>
+  Encoder motor1E(encA1, encA2); 
+  Encoder motor2E(encB1, encB2); 
+  
+  /* Wrap the encoder reading function */
+  long readEncoder(int i) {
+    if (i == LEFT) return motor1E.read();
+    else return motor2E.read();
+    return 0;
+  }
+  
+  /* Wrap the encoder reset function */
+  void resetEncoder(int i) {
+    if (i == LEFT) motor1E.write(0);
+    else motor2E.write(0);
+  }
 #else
   #error A encoder driver must be selected!
 #endif
