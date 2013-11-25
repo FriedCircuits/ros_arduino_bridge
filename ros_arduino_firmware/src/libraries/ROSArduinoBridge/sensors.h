@@ -35,7 +35,6 @@ long Ping(int pin) {
 
 #ifdef USE_FG
 void FG(char cmd){
-  
   unsigned int byte1 = 0;
   unsigned int byte2 = 0;
   unsigned int comb = 0;
