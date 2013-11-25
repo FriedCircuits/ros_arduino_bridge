@@ -32,3 +32,41 @@ long Ping(int pin) {
   return(range);
 }
 
+
+#ifdef USE_FG
+void FG(char cmd){
+  
+  unsigned int byte1 = 0;
+  unsigned int byte2 = 0;
+  unsigned int comb = 0;
+  
+ if (cmd == 1){
+
+  Wire.beginTransmission(FG_Add);
+  Wire.write(0x02);
+  Wire.endTransmission();
+  Wire.requestFrom(FG_Add,2);
+  byte1 = Wire.read();
+  byte2 = Wire.read();
+  comb = ((byte1 << 4));
+  comb |= (byte2 >> 4);
+  Serial.println(map(comb,0x000,0xFFF,0,100000)/10000.0,4);
+  
+  
+ }
+ else if (cmd == 2){
+  Wire.beginTransmission(FG_Add);
+  Wire.write(0x04);
+  Wire.endTransmission();
+  Wire.requestFrom(FG_Add,2);
+  byte1 = Wire.read();
+  byte2 = Wire.read();
+  comb = ((byte1 << 8));
+  comb |= (byte2);
+  Serial.println(map(comb,0x0000,0x6400,0,10000)/100.0,2);
+
+ }
+ else { Serial.println("Invalid Arg");} 
+  
+}
+#endif
